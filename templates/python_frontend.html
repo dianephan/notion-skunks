@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ My Sweetski ✨</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="diary-container">
+        <div class="diary-cover">
+            <div class="diary-title">
+                <h1>✨ Sweetski ✨</h1>
+                <p class="subtitle">Python-Powered Dessert Adventure Through Japan</p>
+            </div>
+            
+            <div class="diary-content">
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="flash-message {{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                
+                <div class="new-entry-section">
+                    <h2>📝 Write a New Entry</h2>
+                    <form method="POST" action="{{ url_for('add_entry') }}" class="entry-form">
+                        <div class="form-group">
+                            <label for="link_url">Link/URL:</label>
+                            <input type="url" id="link_url" name="link_url" placeholder="https://tabelog.com/en/..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Your notes:</label>
+                            <textarea id="notes" name="notes" placeholder="That kakigori was so good!" rows="6" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Save to Notion</button>
+                    </form>
+                </div>
+
+                <div class="entries-section">
+                    <h2>📖 Previous Entries</h2>
+                    <div class="entries-list">
+                        {% if entries %}
+                            {% for entry in entries %}
+                                <div class="entry-card">
+                                    <div class="entry-title">🔗 {{ entry.title or 'No URL' }}</div>
+                                    {% if entry.date %}
+                                        <div class="entry-date">📅 {{ entry.date[:10] }}</div>
+                                    {% elif entry.created_time %}
+                                        <div class="entry-date">📅 {{ entry.created_time[:10] }}</div>
+                                    {% endif %}
+                                    <div class="entry-preview">{{ entry.content or 'No notes' }}</div>
+                                    
+                                    <!-- Tabelog Data Display -->
+                                    {% if entry.tabelog_data and entry.tabelog_data.name %}
+                                        <div class="tabelog-data">
+                                            <h4>🍜 {{ entry.tabelog_data.name }}</h4>
+                                            {% if entry.tabelog_data.rating %}
+                                                <div class="rating">⭐ {{ entry.tabelog_data.rating }}/5.0</div>
+                                            {% endif %}
+                                            {% if entry.tabelog_data.categories %}
+                                                <div class="categories">
+                                                    🏷️ {% for category in entry.tabelog_data.categories %}
+                                                        <span class="category-tag">{{ category }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                            {% if entry.tabelog_data.address %}
+                                                <div class="address">📍 {{ entry.tabelog_data.address }}</div>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                    
+                                    <div class="entry-actions">
+                                        <a href="{{ entry.url }}" target="_blank" class="view-link">View in Notion</a>
+                                        <a href="{{ url_for('delete_entry', entry_id=entry.id) }}" 
+                                           class="delete-link" 
+                                           onclick="return confirm('Are you sure you want to delete this entry?')">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="loading">No entries found. Add your first link and notes above!</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
