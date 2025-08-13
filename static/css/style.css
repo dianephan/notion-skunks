@@ -160,6 +160,86 @@ body {
 .entry-preview {
     color: #666;
     line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+/* Tabelog Data Styling */
+.tabelog-data {
+    background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 100%);
+    border: 2px solid #ffe4e1;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.tabelog-data h4 {
+    color: #8b4513;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    font-family: 'Indie Flower', cursive;
+}
+
+.rating {
+    color: #ff6b35;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.categories {
+    margin-bottom: 8px;
+}
+
+.category-tag {
+    display: inline-block;
+    background: linear-gradient(45deg, #ffb6c1, #ffc0cb);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    margin: 2px 4px 2px 0;
+    font-weight: 500;
+}
+
+.address {
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.entry-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.view-link, .delete-link {
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.view-link {
+    background: linear-gradient(45deg, #90ee90, #98fb98);
+    color: white;
+}
+
+.view-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(144, 238, 144, 0.3);
+}
+
+.delete-link {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    color: white;
+}
+
+.delete-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
 }
 
 .loading {
@@ -167,6 +247,42 @@ body {
     color: #999;
     font-style: italic;
     padding: 20px;
+}
+
+/* Flash Messages */
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash-message {
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    animation: slideIn 0.3s ease;
+}
+
+.flash-message.success {
+    background: linear-gradient(45deg, #90ee90, #98fb98);
+    color: white;
+    border-left: 4px solid #32cd32;
+}
+
+.flash-message.error {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    color: white;
+    border-left: 4px solid #dc143c;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .notification {
@@ -210,5 +326,14 @@ body {
     
     .new-entry-section, .entries-section {
         padding: 20px;
+    }
+    
+    .entry-actions {
+        flex-direction: column;
+    }
+    
+    .category-tag {
+        display: block;
+        margin: 4px 0;
     }
 } 
